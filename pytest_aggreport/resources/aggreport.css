@@ -1,0 +1,53 @@
+/*------------------
+ * 1. Aggregate report table layout
+ *------------------*/
+
+#aggregate-report-table {
+	border: 1px solid #e6e6e6;
+	color: #999;
+	font-size: 12px;
+	width: 100%
+}
+
+#aggregate-report-table th, #aggregate-report-table td {
+	padding: 5px;
+	border: 1px solid #E6E6E6;
+	text-align: left
+}
+#aggregate-report-table th {
+	font-weight: bold;
+	color: black;
+}
+
+#aggregate-report-table tr:nth-child(odd) {
+	background-color: #f6f6f6;
+}
+
+#aggregate-report-table th.passed, #aggregate-report-table td.col-passed, #aggregate-report-table th.min, #aggregate-report-table td.col-min {
+	color: green;
+}
+#aggregate-report-table th.skipped, #aggregate-report-table td.col-skipped,#aggregate-report-table th.avg,  #aggregate-report-table td.col-avg {
+	color: orange;
+}
+#aggregate-report-table th.failed, #aggregate-report-table td.col-failed,#aggregate-report-table th.max,  #aggregate-report-table td.col-max {
+	color: red;
+}
+
+#aggregate-report-table th.rate, #aggregate-report-table td.col-rate {
+	color: black;
+}
+
+#aggregate-report-table th.sta, #aggregate-report-table td.col-stddev {
+	color: #0095ff;
+}
+
+/*------------------
+ * 1. Overwrite the image width and height for better navigation experience
+ *------------------*/
+div.image {
+	height: 600px;
+	width: 800px
+}
+div.image img {
+	width: 800px
+}
