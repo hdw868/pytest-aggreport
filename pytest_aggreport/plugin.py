@@ -73,7 +73,7 @@ class AggregateResult(object):
 class AggregateReport(object):
 
     def __init__(self, config):
-        self.reports = OrderedDict()
+        self.results = OrderedDict()
         self.calculated = False
         self.start_time_utc = None
         self.end_time_utc = None
@@ -91,27 +91,27 @@ class AggregateReport(object):
                      for header, header_class in
                      zip(AggregateResult.COLUMN_HEADERS, AggregateResult.COLUMN_HEADER_CLASSES)],
                     id='aggregate-report-header'), ]
-        for result in self.reports.values():
+        for result in self.results.values():
             tbody.append(result.html_table_row)
         html_report = html.table(html.tbody(tbody), id='aggregate-report-table')
         return html_report
 
     def html_summary_text(self):
-        addtion = [html.p(
+        text = [html.p(
             'Test started at {} UTC and ended at {} UTC, following is the summary report: '.format(
                 self.start_time_utc, self.end_time_utc)),
         ]
-        return addtion
+        return text
 
     def toterminal(self):
         tb = BeautifulTable()
         tb.column_headers = AggregateResult.COLUMN_HEADERS
-        for report in self.reports.values():
-            tb.append_row(report.formatted_statistics)
+        for result in self.results.values():
+            tb.append_row(result.formatted_statistics)
         return tb
 
     @staticmethod
-    def parse_func_name(nodeid):
+    def parse_nodeid(nodeid):
         """Returns the class and method name and id from the current test"""
         names = nodeid.split("::")
         names[0] = names[0].replace("/", ".")
@@ -129,29 +129,29 @@ class AggregateReport(object):
         prefix.extend([self.html_summary_text()])
         prefix.extend([self.html_summary_table()])
 
-    @pytest.mark.hookwrapper
+    @pytest.mark.hookwrapper(trylast=True)
     def pytest_runtest_makereport(self, item, call):
         outcome = yield
         report = outcome.get_result()
-        test_name = self.parse_func_name(report.nodeid)[1]
+        test_name = self.parse_nodeid(report.nodeid)[1]
         if report.when == 'call':
             report.call_start = call.start
             report.call_stop = call.stop
             # Aggregate calculation
-            if self.reports.get(test_name) is None:
-                self.reports[test_name] = AggregateResult(test_name)
-            aggreport = self.reports.get(test_name)
-            aggreport.durations.append(report.duration)
+            if self.results.get(test_name) is None:
+                self.results[test_name] = AggregateResult(test_name)
+            result = self.results.get(test_name)
+            result.durations.append(report.duration)
             if report.passed:
-                aggreport.count_passed += 1
+                result.count_passed += 1
             elif report.failed:
-                aggreport.count_failed += 1
+                result.count_failed += 1
             elif report.skipped:
-                aggreport.count_skipped += 1
+                result.count_skipped += 1
 
     def pytest_terminal_summary(self, terminalreporter):
         terminalreporter.write_sep('-', 'aggregate summary report')
-        terminalreporter.line(self.toterminal)
+        terminalreporter.line(self.toterminal())
 
     def pytest_sessionstart(self, session):
         self.start_time_utc = datetime.utcnow().replace(microsecond=0)
@@ -160,9 +160,11 @@ class AggregateReport(object):
         self.end_time_utc = datetime.utcnow().replace(microsecond=0)
 
 
+@pytest.hookimpl(trylast=True)
 def pytest_configure(config):
-    config._aggreport = AggregateReport(config)
-    config.pluginmanager.register(config._aggreport)
+    if config.getoption('count') > 1:
+        config._aggreport = AggregateReport(config)
+        config.pluginmanager.register(config._aggreport)
 
 
 def pytest_unconfigure(config):
