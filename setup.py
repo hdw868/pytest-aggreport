@@ -22,8 +22,8 @@ setup(
     url='https://github.com/hdw868/pytest-aggreport',
     description=(
         'pytest plugin for pytest-repeat that aggregates test result of the same test in terminal and html'
-        '(if pytest-html is available) with average, max, min stddev execution time .'),
-    long_description=read('README.rst'),
+        '(if pytest-html is available) with additional statistics.'),
+    long_description=read('README.md'),
     packages=['pytest_aggreport'],
     package_data={'pytest_aggreport': ['resources/*']},
     python_requires='>=3.6, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*',
