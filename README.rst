@@ -28,27 +28,68 @@ This `pytest`_ plugin was generated with `Cookiecutter`_ along with `@hackebrot`
 Features
 --------
 
-* TODO
+* Generate aggregated test result group by test case name with details;
+* Embed test result into html report if pytest-html is available;
 
 
 Requirements
 ------------
 
-* pytest-repeat
-
+* pytest >= 4.3.1
+* pytest-repeat >= 0.8.0
+* beautifultable >= 0.7.0
+* python >= 3.6
 
 Installation
 ------------
 
-You can install "pytest-aggreport" via `pip`_ from `PyPI`_::
+You can install "pytest-aggreport" via `pip`_ from `PyPI`_:
+
+::
 
     $ pip install pytest-aggreport
-
 
 Usage
 -----
 
-* TODO
+Python 3.6-3.7 supported.
+
+Pytest will automatically find the plugin and use it when you run pytest with --count parameter.
+When test is done, you will see a summary report in terminal:
+
+::
+
+    $ pytest --count=5
+    ...
+    ---------------------------------------------- aggregate summary report -----------------------------------------------
+    +-------------+------+------+-------+--------+-------+-------+-------+---------+
+    | TestCase Na | Pass | Fail | Skipp | Pass R | AVG ( | MAX ( | MIN ( | STDDEV  |
+    |     me      |  ed  |  ed  |  ed   |  ate   |  s)   |  s)   |  s)   |   (s)   |
+    +-------------+------+------+-------+--------+-------+-------+-------+---------+
+    |  test_pass  |  5   |  0   |   0   | 100.00 |  0.1  |  0.1  |  0.1  |   0.0   |
+    |             |      |      |       |   %    |       |       |       |         |
+    +-------------+------+------+-------+--------+-------+-------+-------+---------+
+    |  test_skip  |  0   |  0   |   5   | 0.00%  |  0.0  |  0.0  |  0.0  |   0.0   |
+    +-------------+------+------+-------+--------+-------+-------+-------+---------+
+    |  test_fail  |  0   |  5   |   0   | 0.00%  | 0.15  | 0.15  | 0.15  |   0.0   |
+    +-------------+------+------+-------+--------+-------+-------+-------+---------+
+    | test_xpass  |  5   |  0   |   0   | 100.00 |  0.1  |  0.1  |  0.1  |   0.0   |
+    |             |      |      |       |   %    |       |       |       |         |
+    +-------------+------+------+-------+--------+-------+-------+-------+---------+
+    | test_xfail  |  0   |  5   |   0   | 0.00%  |  0.1  |  0.1  |  0.1  |   0.0   |
+    +-------------+------+------+-------+--------+-------+-------+-------+---------+
+    ...
+
+if pytest-html is used (run with --html parameter), then a summary report will also be generated in html report:
+
+.. image:: html_report
+    :target: docs/html_report.PNG
+
+To disable it altogether, you can use the -p argument, for example:
+
+::
+
+   $pytest -p no:aggreport
 
 Contributing
 ------------
