@@ -13,7 +13,7 @@ from py.xml import html
 class AggregateResult(object):
     COLUMN_HEADERS = ['TestCase Name', 'Passed', 'Failed', 'Skipped', 'Pass Rate',
                       'AVG (s)', 'MAX (s)', 'MIN (s)', 'STDDEV (s)', ]
-    COLUMN_HEADER_CLASSES = ['name', 'passed', 'failed', 'skipped', 'pass-rate',
+    COLUMN_HEADER_CLASSES = ['name', 'passed', 'failed', 'skipped', 'rate',
                              'avg', 'max', 'min', 'stddev', ]
     COLUMN_CLASSES = ['col-name', 'col-passed', 'col-failed', 'col-skipped', 'col-rate',
                       'col-avg', 'col-max', 'col-min', 'col-stddev']
@@ -67,7 +67,7 @@ class AggregateResult(object):
 
     @property
     def html_table_row(self):
-        return html.tr(list(zip(self.formatted_statistics, self.COLUMN_CLASSES)))
+        return html.tr([html.td(v, class_=class_) for v, class_ in zip(self.formatted_statistics, self.COLUMN_CLASSES)])
 
 
 class AggregateReport(object):
@@ -134,20 +134,25 @@ class AggregateReport(object):
         outcome = yield
         report = outcome.get_result()
         test_name = self.parse_nodeid(report.nodeid)[1]
+        # Get result object
+        if self.results.get(test_name) is None:
+            self.results[test_name] = AggregateResult(test_name)
+        result = self.results.get(test_name)
+        # skip will not has attr wasxfail
+        if report.skipped and not hasattr(report, "wasxfail"):
+            result.count_skipped += 1
+            result.durations.append(0)
         if report.when == 'call':
             report.call_start = call.start
             report.call_stop = call.stop
-            # Aggregate calculation
-            if self.results.get(test_name) is None:
-                self.results[test_name] = AggregateResult(test_name)
-            result = self.results.get(test_name)
             result.durations.append(report.duration)
             if report.passed:
                 result.count_passed += 1
             elif report.failed:
                 result.count_failed += 1
+            # xfail will get skipped outcome when test fail
             elif report.skipped:
-                result.count_skipped += 1
+                result.count_failed += 1
 
     def pytest_terminal_summary(self, terminalreporter):
         terminalreporter.write_sep('-', 'aggregate summary report')

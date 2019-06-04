@@ -20,7 +20,9 @@ setup(
     maintainer_email='hdw868@126.com',
     license='MIT',
     url='https://github.com/hdw868/pytest-aggreport',
-    description='pytest plugin for pytest-repeat that aggregates test result of the same test in terminal and html(if pytest-html is available).',
+    description=(
+        'pytest plugin for pytest-repeat that aggregates test result of the same test in terminal and html'
+        '(if pytest-html is available) with average, max, min stddev execution time .'),
     long_description=read('README.rst'),
     packages=['pytest_aggreport'],
     package_data={'pytest_aggreport': ['resources/*']},

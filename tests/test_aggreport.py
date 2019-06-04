@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 
+pytest_plugins = "pytester"
 
-def test_toterminal(testdir):
+
+def test_terminal_report(testdir):
     """Make sure that the result will generate terminal report"""
-
     # create a temporary pytest test module
     testdir.makepyfile("""
         import time
@@ -13,47 +14,40 @@ def test_toterminal(testdir):
             pass
         
         @pytest.mark.skip()
-        def test_skip(): pass
+        def test_skip(): 
+            time.sleep(0.1)
+            pass
             
         def test_fail(): 
             time.sleep(0.15)
             assert False
         
         @pytest.mark.xfail()
-        def test_xpass(): pass
+        def test_xpass():
+            time.sleep(0.1)
+            pass
         
         @pytest.mark.xfail()
-        def test_xfail(): assert False
+        def test_xfail(): 
+            time.sleep(0.1)
+            assert False
     """)
 
     # run pytest with the following cmd args
     result = testdir.runpytest(
         '--count=5',
     )
-
-    # make sure that that we get a '1' exit code for the testsuite
-    assert result.ret == 1
-
-
-# def test_parse_nodeid(testdir):
-#     """Make sure that parse_nodeid function works properly."""
-#
-#     # create a temporary pytest test module
-#     testdir.makepyfile("""
-#         def test_abc(): pass
-#         class TestClassA
-#             def test_abc(self): pass
-#     """)
-#
-#     # run pytest with the following cmd args
-#     result = testdir.runpytest(
-#         '--count=5',
-#     )
-#
-#     # fnmatch_lines does an assertion internally
-#     result.stdout.fnmatch_lines([
-#         'aggregate summary report',
-#     ])
-#
-#     # make sure that that we get a '0' exit code for the testsuite
-#     assert result.ret == 0
+    # test terminal result
+    result.stdout.fnmatch_lines_random('*- aggregate summary report -*')
+    result.stdout.fnmatch_lines_random(
+        '|  test_pass  |  5   |  0   |   0   | 100.00 |  0.1  |  0.1  |  0.1  |   0.0   |')
+    result.stdout.fnmatch_lines_random(
+        '|  test_skip  |  0   |  0   |   5   | 0.00%  |  0.0  |  0.0  |  0.0  |   0.0   |')
+    result.stdout.fnmatch_lines_random(
+        '|  test_fail  |  0   |  5   |   0   | 0.00%  | 0.15  | 0.15  | 0.15  |   0.0   |')
+    result.stdout.fnmatch_lines_random(
+        '| test_xpass  |  5   |  0   |   0   | 100.00 |  0.1  |  0.1  |  0.1  |   0.0   |')
+    result.stdout.fnmatch_lines_random(
+        '| test_xfail  |  0   |  5   |   0   | 0.00%  |  0.1  |  0.1  |  0.1  |   0.0   |')
+    # test run result outcomes
+    result.assert_outcomes(passed=5, failed=5, xfailed=5, xpassed=5, skipped=5)

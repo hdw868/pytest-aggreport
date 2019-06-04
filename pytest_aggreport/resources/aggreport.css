@@ -34,7 +34,7 @@
 }
 
 #aggregate-report-table th.rate, #aggregate-report-table td.col-rate {
-	color: black;
+	color: #grey;
 }
 
 #aggregate-report-table th.stddev, #aggregate-report-table td.col-stddev {
