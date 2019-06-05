@@ -1,19 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os
-import codecs
 from setuptools import setup
 
-
-def read(fname):
-    file_path = os.path.join(os.path.dirname(__file__), fname)
-    return codecs.open(file_path, encoding='utf-8').read()
-
+with open("README.md", "r") as fh:
+    long_description = fh.read()
 
 setup(
     name='pytest-aggreport',
-    version='0.1.0',
+    version='0.1.1',
     author='Wayne Hong',
     author_email='hdw868@126.com',
     maintainer='Wayne Hong',
@@ -23,7 +18,8 @@ setup(
     description=(
         'pytest plugin for pytest-repeat that aggregates test result of the same test in terminal and html'
         '(if pytest-html is available) with additional statistics.'),
-    long_description=read('README.md'),
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     packages=['pytest_aggreport'],
     package_data={'pytest_aggreport': ['resources/*']},
     python_requires='>=3.6, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*',

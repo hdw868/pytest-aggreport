@@ -1,23 +1,22 @@
 # pytest-aggreport
 
-[![PyPI version](https://img.shields.io/pypi/v/pytest-aggreport.svg)](https://pypi.org/project/pytest-aggreport) [![Python versions](https://img.shields.io/pypi/pyversions/pytest-aggreport.svg)](https://pypi.org/project/pytest-aggreport) [![See Build Status on Travis CI](https://travis-ci.org/hdw868/pytest-aggreport.svg?branch=master)](https://travis-ci.org/hdw868/pytest-aggreport) 
+[![PyPI version](https://img.shields.io/pypi/v/pytest-aggreport.svg)](https://pypi.org/project/pytest-aggreport) [![Python versions](https://img.shields.io/pypi/pyversions/pytest-aggreport.svg)](https://pypi.org/project/pytest-aggreport) [![See Build Status on Travis CI](https://travis-ci.org/hdw868/pytest-aggreport.svg?branch=master)](https://travis-ci.org/hdw868/pytest-aggreport) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/264376696d3b405d883e92bbc479d637)](https://app.codacy.com/app/hdw868/pytest-aggreport?utm_source=github.com&utm_medium=referral&utm_content=hdw868/pytest-aggreport&utm_campaign=Badge_Grade_Settings)
 
 This [pytest](https://github.com/pytest-dev/pytest) plugin was generated with [Cookiecutter](https://github.com/audreyr/cookiecutter) along with [@hackebrot](https://github.com/hackebrot)'s [cookiecutter-pytest-plugin](https://github.com/pytest-dev/cookiecutter-pytest-plugin) template.
 
+
 ## Features
 
-- Generate aggregated test result group by test case name with details;
-- Embed test result into html report if pytest-html is available;
-
+-  Generate aggregated test result group by test case name with details;
+-  Embed test result into html report if pytest-html is available;
 
 
 ## Requirements
 
-- python >= 3.6
-- pytest >= 4.3.1
-- beautifultable >= 0.7.0
-- pytest-repeat >= 0.8.0
-
+-  python >= 3.6
+-  pytest >= 4.3.1
+-  beautifultable >= 0.7.0
+-  pytest-repeat >= 0.8.0
 
 
 ## Installation
@@ -27,8 +26,6 @@ You can install "pytest-aggreport" via [pip](https://pypi.org/project/pip/) from
 ```bash
 $ pip install pytest-aggreport
 ```
-
-
 
 ## Usage
 
@@ -68,17 +65,14 @@ $ pytest -p no:aggreport
 ```
 
 
-
 ## Contributing
 
 Contributions are very welcome. Tests can be run with [tox](https://tox.readthedocs.io/en/latest/), please ensure the coverage at least stays the same before you submit a pull request.
 
 
-
 ## License
 
 Distributed under the terms of the [MIT](http://opensource.org/licenses/MIT) license, "pytest-aggreport" is free and open source software
-
 
 
 ## Issues

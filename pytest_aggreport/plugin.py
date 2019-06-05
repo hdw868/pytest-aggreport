@@ -48,8 +48,7 @@ class AggregateResult(object):
             result = self.count_passed / (self.count_failed + self.count_passed)
         except ZeroDivisionError:
             pass
-        finally:
-            return result
+        return result
 
     @property
     def formatted_statistics(self):
