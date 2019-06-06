@@ -1,5 +1,6 @@
 # pytest-aggreport
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/264376696d3b405d883e92bbc479d637)](https://app.codacy.com/app/hdw868/pytest-aggreport?utm_source=github.com&utm_medium=referral&utm_content=hdw868/pytest-aggreport&utm_campaign=Badge_Grade_Settings)
 [![PyPI version](https://img.shields.io/pypi/v/pytest-aggreport.svg)](https://pypi.org/project/pytest-aggreport) [![Python versions](https://img.shields.io/pypi/pyversions/pytest-aggreport.svg)](https://pypi.org/project/pytest-aggreport) [![See Build Status on Travis CI](https://travis-ci.org/hdw868/pytest-aggreport.svg?branch=master)](https://travis-ci.org/hdw868/pytest-aggreport) 
 
 This [pytest](https://github.com/pytest-dev/pytest) plugin was generated with [Cookiecutter](https://github.com/audreyr/cookiecutter) along with [@hackebrot](https://github.com/hackebrot)'s [cookiecutter-pytest-plugin](https://github.com/pytest-dev/cookiecutter-pytest-plugin) template.
