@@ -4,20 +4,17 @@
 
 This [pytest](https://github.com/pytest-dev/pytest) plugin was generated with [Cookiecutter](https://github.com/audreyr/cookiecutter) along with [@hackebrot](https://github.com/hackebrot)'s [cookiecutter-pytest-plugin](https://github.com/pytest-dev/cookiecutter-pytest-plugin) template.
 
-
 ## Features
 
--  Generate aggregated test result group by test case name with details;
--  Embed test result into html report if pytest-html is available;
-
+  - Generate aggregated test result group by test case name with details;
+  - Embed test result into html report if pytest-html is available;
 
 ## Requirements
 
--  python >= 3.6
--  pytest >= 4.3.1
--  beautifultable >= 0.7.0
--  pytest-repeat >= 0.8.0
-
+  - python >= 3.6
+  - pytest >= 4.3.1
+  - beautifultable >= 0.7.0
+  - pytest-repeat >= 0.8.0
 
 ## Installation
 
@@ -64,16 +61,13 @@ To disable the plugin, you can use the `-p` argument, for example:
 $ pytest -p no:aggreport
 ```
 
-
 ## Contributing
 
 Contributions are very welcome. Tests can be run with [tox](https://tox.readthedocs.io/en/latest/), please ensure the coverage at least stays the same before you submit a pull request.
 
-
 ## License
 
 Distributed under the terms of the [MIT](http://opensource.org/licenses/MIT) license, "pytest-aggreport" is free and open source software
-
 
 ## Issues
 
