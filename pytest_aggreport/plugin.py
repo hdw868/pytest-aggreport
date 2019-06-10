@@ -13,7 +13,8 @@ COLUMN_HEADERS = ['TestCase Name', 'Passed', 'Failed', 'Skipped', 'Pass Rate',
                   'AVG (s)', 'MAX (s)', 'MIN (s)', 'STDDEV (s)', ]
 COLUMN_HEADER_CLASSES = ['name', 'passed', 'failed', 'skipped', 'rate',
                          'avg', 'max', 'min', 'stddev', ]
-COLUMN_CLASSES = ['col-name', 'col-passed', 'col-failed', 'col-skipped', 'col-rate',
+COLUMN_CLASSES = ['col-name', 'col-passed', 'col-failed', 'col-skipped',
+                  'col-rate',
                   'col-avg', 'col-max', 'col-min', 'col-stddev']
 
 
@@ -52,7 +53,8 @@ class AggregateResult(object):
     def pass_rate(self):
         result = 0
         try:
-            result = self.count_passed / (self.count_failed + self.count_passed)
+            result = self.count_passed / (
+                    self.count_failed + self.count_passed)
         except ZeroDivisionError:
             pass
         return result
@@ -81,7 +83,8 @@ class AggregateResult(object):
     @property
     def html_table_row(self):
         cells = html.tr(
-            [html.td(v, class_=class_) for v, class_ in zip(self.formatted_statistics, COLUMN_CLASSES)])
+            [html.td(v, class_=class_) for v, class_ in
+             zip(self.formatted_statistics, COLUMN_CLASSES)])
         self.config.hook.pytest_aggreport_html_table_row(result=self,
                                                          cells=cells)
         return cells
@@ -97,7 +100,8 @@ class AggregateReport(object):
         self.config = config
         # add custom css when pytest-html is available
         if config.pluginmanager.hasplugin("html"):
-            css_path = pkg_resources.resource_filename(__name__, os.path.join('resources', 'aggreport.css'))
+            css_path = pkg_resources.resource_filename(__name__, os.path.join(
+                'resources', 'aggreport.css'))
             if hasattr(config.option, "css"):
                 config.option.css.append(css_path)
             else:
@@ -115,13 +119,15 @@ class AggregateReport(object):
                     id='aggregate-report-header'), ]
         for result in self.results.values():
             tbody.append(result.html_table_row)
-        html_report = html.table(html.tbody(tbody), id='aggregate-report-table')
+        html_report = html.table(html.tbody(tbody),
+                                 id='aggregate-report-table')
         return html_report
 
     @property
     def html_summary_text(self):
         text = [html.p(
-            'Test started at {} UTC and ended at {} UTC, following is the summary report: '.format(
+            'Test started at {} UTC and ended at {} UTC, '
+            'following is the summary report: '.format(
                 self.start_time_utc, self.end_time_utc)), ]
         return text
 

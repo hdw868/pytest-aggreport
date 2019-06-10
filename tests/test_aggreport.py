@@ -5,16 +5,16 @@ pytest_plugins = "pytester"
 EXAMPLE_CODE = """
 import time
 import pytest
-def test_pass(): 
+def test_pass():
     time.sleep(0.01)
     pass
 
 @pytest.mark.skip()
-def test_skip(): 
+def test_skip():
     time.sleep(0.01)
     pass
-    
-def test_fail(): 
+
+def test_fail():
     time.sleep(0.01)
     assert False
 
@@ -24,7 +24,7 @@ def test_xpass():
     pass
 
 @pytest.mark.xfail()
-def test_xfail(): 
+def test_xfail():
     time.sleep(0.01)
     assert False
 """
@@ -43,15 +43,22 @@ class TestTerminal(object):
         # test terminal result
         result.stdout.fnmatch_lines([
             '*- aggregate summary report -*',
-            '| TestCase Na | Pass | Fail | Skipp | Pass R | AVG ( | MAX ( | MIN ( | STDDEV  |',
-            '|  test_pass  | 100  |  0   |   0   | 100.00 | 0.01  | *  | 0.01  |   0.0   |',
-            '|  test_skip  |  0   |  0   |  100  | 0.00%  |  0.0  |  0.0  |  0.0  |   0.0   |',
-            '|  test_fail  |  0   | 100  |   0   | 0.00%  | 0.01  | *  | 0.01  |   0.0   |',
-            '| test_xpass  | 100  |  0   |   0   | 100.00 | 0.01  | *  | 0.01  |   0.0   |',
-            '| test_xfail  |  0   | 100  |   0   | 0.00%  | 0.01  | *  | 0.01  |   0.0   |'
+            '| TestCase Na | Pass | Fail | Skipp |'
+            ' Pass R | AVG ( | MAX ( | MIN ( | STDDEV  |',
+            '|  test_pass  | 100  |  0   |   0   |'
+            ' 100.00 | 0.01  | *  | 0.01  |   0.0   |',
+            '|  test_skip  |  0   |  0   |  100  |'
+            ' 0.00%  |  0.0  |  0.0  |  0.0  |   0.0   |',
+            '|  test_fail  |  0   | 100  |   0   | '
+            '0.00%  | 0.01  | *  | 0.01  |   0.0   |',
+            '| test_xpass  | 100  |  0   |   0   | '
+            '100.00 | 0.01  | *  | 0.01  |   0.0   |',
+            '| test_xfail  |  0   | 100  |   0   |'
+            ' 0.00%  | 0.01  | *  | 0.01  |   0.0   |'
         ])
         # test run result outcomes
-        result.assert_outcomes(passed=100, failed=100, xfailed=100, xpassed=100, skipped=100)
+        result.assert_outcomes(passed=100, failed=100, xfailed=100,
+                               xpassed=100, skipped=100)
 
     def test_custom_content_in_terminal(self, testdir):
         """Make sure that the result will generate terminal report"""
@@ -83,15 +90,22 @@ class TestTerminal(object):
         # test terminal result
         result.stdout.fnmatch_lines([
             '*- aggregate summary report -*',
-            '| TestCase N | Pas | Fail | Skipp | Pass R | AVG  | MAX  | MIN  | STDDEV | Ext |',
-            '| test_pass  | 100 |  0   |   0   | 100.00 | 0.01 | * | 0.01 |  0.0   | 0.0 |',
-            '| test_skip  |  0  |  0   |  100  | 0.00%  | 0.0  | *  | 0.0  |  0.0   | 0.0 |',
-            '| test_fail  |  0  | 100  |   0   | 0.00%  | 0.01 | * | 0.01 |  0.0   | 0.0 |',
-            '| test_xpass | 100 |  0   |   0   | 100.00 | 0.01 | * | 0.01 |  0.0   | 0.0 |',
-            '| test_xfail |  0  | 100  |   0   | 0.00%  | 0.01 | * | 0.01 |  0.0   | 0.0 |'
+            '| TestCase N | Pas | Fail | Skipp |'
+            ' Pass R | AVG  | MAX  | MIN  | STDDEV | Ext |',
+            '| test_pass  | 100 |  0   |   0   |'
+            ' 100.00 | 0.01 | * | 0.01 |  0.0   | 0.0 |',
+            '| test_skip  |  0  |  0   |  100  | '
+            '0.00%  | 0.0  | *  | 0.0  |  0.0   | 0.0 |',
+            '| test_fail  |  0  | 100  |   0   | '
+            '0.00%  | 0.01 | * | 0.01 |  0.0   | 0.0 |',
+            '| test_xpass | 100 |  0   |   0   | '
+            '100.00 | 0.01 | * | 0.01 |  0.0   | 0.0 |',
+            '| test_xfail |  0  | 100  |   0   | '
+            '0.00%  | 0.01 | * | 0.01 |  0.0   | 0.0 |'
         ])
         # test run result outcomes
-        result.assert_outcomes(passed=100, failed=100, xfailed=100, xpassed=100, skipped=100)
+        result.assert_outcomes(passed=100, failed=100, xfailed=100,
+                               xpassed=100, skipped=100)
 
 
 def read_html(path):
@@ -117,14 +131,21 @@ class TestHTML(object):
         html = read_html(path)
 
         # test run result outcomes
-        result.assert_outcomes(passed=100, failed=100, xfailed=100, xpassed=100, skipped=100)
+        result.assert_outcomes(passed=100, failed=100, xfailed=100,
+                               xpassed=100, skipped=100)
         assert_results_by_col(html, 'col-name',
-                              ['test_pass', 'test_skip', 'test_fail', 'test_xpass', 'test_xfail'])
-        assert_results_by_col(html, 'col-passed', ['100', '0', '0', '100', '0'])
-        assert_results_by_col(html, 'col-failed', ['0', '0', '100', '0', '100'])
+                              ['test_pass', 'test_skip', 'test_fail',
+                               'test_xpass', 'test_xfail'])
+        assert_results_by_col(html, 'col-passed',
+                              ['100', '0', '0', '100', '0'])
+        assert_results_by_col(html, 'col-failed',
+                              ['0', '0', '100', '0', '100'])
         assert_results_by_col(html, 'col-skipped', ['0', '100', '0', '0', '0'])
-        assert_results_by_col(html, 'col-rate', ['100.00%', '0.00%', '0.00%', '100.00%', '0.00%'])
-        assert_results_by_col(html, 'col-min', ['0.01', '0.00', '0.01', '0.01', '0.01'])
+        assert_results_by_col(html, 'col-rate',
+                              ['100.00%', '0.00%', '0.00%', '100.00%',
+                               '0.00%'])
+        assert_results_by_col(html, 'col-min',
+                              ['0.01', '0.00', '0.01', '0.01', '0.01'])
 
     def test_custom_html_report(self, testdir):
         # create a temporary pytest contest.py file
@@ -140,7 +161,10 @@ class TestHTML(object):
 
             @pytest.hookimpl(optionalhook=True)
             def pytest_aggreport_html_table_row(result, cells):
-                cells.append(html.td("{:.2f}".format(statistics.median(result.durations)), class_='col-extra'))
+                cells.append(
+                    html.td("{:.2f}".format(
+                        statistics.median(result.durations)),
+                    class_='col-extra'))
         """)
         testdir.makepyfile(EXAMPLE_CODE)
         path = testdir.tmpdir.join('report.html')
@@ -150,7 +174,10 @@ class TestHTML(object):
                                    )
         html = read_html(path)
         # test run result outcomes
-        result.assert_outcomes(passed=100, failed=100, xfailed=100, xpassed=100, skipped=100)
+        result.assert_outcomes(passed=100, failed=100, xfailed=100,
+                               xpassed=100, skipped=100)
         assert_results_by_col(html, 'col-name',
-                              ['test_pass', 'test_skip', 'test_fail', 'test_xpass', 'test_xfail'])
-        assert_results_by_col(html, 'col-extra', ['0.01', '0.00', '0.01', '0.01', '0.01'])
+                              ['test_pass', 'test_skip', 'test_fail',
+                               'test_xpass', 'test_xfail'])
+        assert_results_by_col(html, 'col-extra',
+                              ['0.01', '0.00', '0.01', '0.01', '0.01'])
