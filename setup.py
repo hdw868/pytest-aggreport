@@ -8,7 +8,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name='pytest-aggreport',
-    version='0.1.2',
+    version='0.1.3',
     author='Wayne Hong',
     author_email='hdw868@126.com',
     maintainer='Wayne Hong',
