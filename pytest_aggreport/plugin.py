@@ -169,10 +169,7 @@ class SessionReport(object):
         prefix.extend([self.html_summary_text])
         prefix.extend([self.html_summary_table])
 
-    @pytest.hookimpl(hookwrapper=True, trylast=True)
-    def pytest_runtest_makereport(self, item, call):
-        outcome = yield
-        report = outcome.get_result()
+    def pytest_runtest_logreport(self, report):
         names, param = self.parse_nodeid(report.nodeid)
         func_name = '.'.join(names)
         # Get case report object
@@ -184,8 +181,6 @@ class SessionReport(object):
             case_report.count_skipped += 1
             case_report.durations.append(0)
         if report.when == 'call':
-            report.call_start = call.start
-            report.call_stop = call.stop
             case_report.durations.append(report.duration)
             if report.passed:
                 case_report.count_passed += 1
@@ -220,7 +215,7 @@ class SessionReport(object):
 
 @pytest.hookimpl(trylast=True)
 def pytest_configure(config):
-    if config.getoption('count') > 1:
+    if config.getoption('count') > 1 and not hasattr(config, 'slaveinput'):
         config._aggreport = SessionReport(config)
         config.pluginmanager.register(config._aggreport)
 
