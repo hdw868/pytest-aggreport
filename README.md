@@ -53,7 +53,7 @@ $ pytest --count=5
 
 If [pytest-html](https://github.com/pytest-dev/pytest-html) is enabled(run with `--html` argument), then a summary report will also be embedded in the html report:
 
-![html_report](docs/html_report.PNG)
+![html_report](docs/html_report.png)
 
 To disable the plugin, you can use the `-p` argument, for example:
 
