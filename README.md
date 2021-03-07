@@ -12,8 +12,8 @@ This [pytest](https://github.com/pytest-dev/pytest) plugin was generated with [C
 ## Requirements
 
   - python >= 3.6
-  - pytest >= 4.3.1
-  - beautifultable >= 0.7.0
+  - pytest >= 6.2.2
+  - beautifultable >= 1.0.1
   - pytest-repeat >= 0.8.0
 
 ## Installation

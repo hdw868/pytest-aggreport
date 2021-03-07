@@ -8,7 +8,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name='pytest-aggreport',
-    version='0.1.4',
+    version='0.1.5',
     author='Wayne Hong',
     author_email='hdw868@126.com',
     maintainer='Wayne Hong',
@@ -23,7 +23,7 @@ setup(
     packages=['pytest_aggreport'],
     package_data={'pytest_aggreport': ['resources/*']},
     python_requires='>=3.6, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*',
-    install_requires=['pytest>=6.2.2', 'beautifultable==1.0.1',
+    install_requires=['pytest>=6.2.2', 'beautifultable>=1.0.1',
                       'py>=1.8.0', 'pytest-repeat>=0.8.0'],
     classifiers=[
         'Development Status :: 4 - Beta',
@@ -34,6 +34,7 @@ setup(
         'Topic :: Utilities',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: Implementation :: CPython',
         'Programming Language :: Python :: Implementation :: PyPy',
         'Operating System :: OS Independent',
