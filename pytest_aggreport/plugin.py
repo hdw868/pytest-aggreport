@@ -143,9 +143,9 @@ class SessionReport(object):
         cells = list(COLUMN_HEADERS)
         self.config.hook.pytest_aggreport_terminal_table_header(
             cells=cells)
-        tb.column_headers = cells
+        tb.columns.header = cells
         for result in self.case_reports.values():
-            tb.append_row(result.terminal_table_row)
+            tb.rows.append(result.terminal_table_row)
         return tb
 
     @staticmethod
@@ -192,7 +192,7 @@ class SessionReport(object):
 
     def pytest_terminal_summary(self, terminalreporter):
         terminalreporter.write_sep('-', 'aggregate summary report')
-        terminalreporter.line(self.terminal_table)
+        terminalreporter.line(str(self.terminal_table))
 
     def pytest_sessionstart(self, session):
         self.start_time_utc = datetime.utcnow().replace(microsecond=0)

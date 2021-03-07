@@ -23,7 +23,7 @@ setup(
     packages=['pytest_aggreport'],
     package_data={'pytest_aggreport': ['resources/*']},
     python_requires='>=3.6, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*',
-    install_requires=['pytest>=4.3.1', 'beautifultable>=0.7.0',
+    install_requires=['pytest>=6.2.2', 'beautifultable==1.0.1',
                       'py>=1.8.0', 'pytest-repeat>=0.8.0'],
     classifiers=[
         'Development Status :: 4 - Beta',

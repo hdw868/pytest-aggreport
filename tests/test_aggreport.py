@@ -67,7 +67,7 @@ class TestHTML(object):
 
         # test run result outcomes
         result.assert_outcomes(passed=100, failed=100, xfailed=100,
-                               xpassed=100, skipped=200, error=100)
+                               xpassed=100, skipped=200, errors=100)
         assert_results_by_col(html, 'col-name',
                               ['test_html_report.test_pass',
                                'test_html_report.test_skip',
@@ -120,7 +120,7 @@ class TestHTML(object):
         html = read_html(path)
         # test run result outcomes
         result.assert_outcomes(passed=100, failed=100, xfailed=100,
-                               xpassed=100, skipped=200, error=100)
+                               xpassed=100, skipped=200, errors=100)
         assert_results_by_col(html, 'col-name',
                               ['test_custom_html_report.test_pass',
                                'test_custom_html_report.test_skip',
@@ -145,7 +145,7 @@ class TestHTML(object):
 
         # test run result outcomes
         result.assert_outcomes(passed=100, failed=100, xfailed=100,
-                               xpassed=100, skipped=200, error=100)
+                               xpassed=100, skipped=200, errors=100)
         assert_results_by_col(html, 'col-name',
                               ['test_xdist_compatibality.test_pass',
                                'test_xdist_compatibality.test_skip',
